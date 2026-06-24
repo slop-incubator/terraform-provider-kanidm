@@ -27,13 +27,13 @@ type oauth2RSResource struct {
 
 // OAuth2RSResourceModel maps the Terraform schema to Go types.
 type OAuth2RSResourceModel struct {
-	ID          types.String `tfsdk:"id"`
-	Name        types.String `tfsdk:"name"`
-	DisplayName types.String `tfsdk:"display_name"`
-	Origin      types.String `tfsdk:"origin"`
-	ScopeMaps   types.Map    `tfsdk:"scope_maps"`
-	SupScopeMaps types.Map   `tfsdk:"sup_scope_maps"`
-	ClaimMaps   types.List   `tfsdk:"claim_maps"`
+	ID           types.String `tfsdk:"id"`
+	Name         types.String `tfsdk:"name"`
+	DisplayName  types.String `tfsdk:"display_name"`
+	Origin       types.String `tfsdk:"origin"`
+	ScopeMaps    types.Map    `tfsdk:"scope_maps"`
+	SupScopeMaps types.Map    `tfsdk:"sup_scope_maps"`
+	ClaimMaps    types.List   `tfsdk:"claim_maps"`
 }
 
 // ClaimMapModel represents a single claim mapping entry.

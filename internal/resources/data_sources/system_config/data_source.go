@@ -20,11 +20,11 @@ type systemConfigDataSource struct {
 
 type SystemConfigDataSourceModel struct {
 	// id is required by the framework even for singleton data sources.
-	ID              types.String `tfsdk:"id"`
-	Domain          types.String `tfsdk:"domain"`
-	DisplayName     types.String `tfsdk:"display_name"`
-	LDAPEnabled     types.Bool   `tfsdk:"ldap_enabled"`
-	BadlistEnabled  types.Bool   `tfsdk:"badlist_enabled"`
+	ID             types.String `tfsdk:"id"`
+	Domain         types.String `tfsdk:"domain"`
+	DisplayName    types.String `tfsdk:"display_name"`
+	LDAPEnabled    types.Bool   `tfsdk:"ldap_enabled"`
+	BadlistEnabled types.Bool   `tfsdk:"badlist_enabled"`
 }
 
 func NewDataSource() datasource.DataSource {

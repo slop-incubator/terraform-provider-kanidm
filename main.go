@@ -11,6 +11,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+
 	"github.com/slop-incubator/terraform-provider-kanidm/internal/provider"
 )
 
