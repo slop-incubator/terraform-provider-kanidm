@@ -17,31 +17,31 @@ linters:
     - prealloc
     - unconvert
     - unparam
-
-linters-settings:
-  gosec:
-    excludes:
-      # G402: TLS InsecureSkipVerify is intentional and guarded by provider logic.
-      - G402
-  goimports:
-    local-prefixes: github.com/slop-incubator/terraform-provider-kanidm
-
-issues:
-  exclude-rules:
-    # Test files can use broad assertions and globals.
-    - path: "_test\\.go"
-      linters:
-        - gosec
-        - unparam
-    # Generated scaffold files have TODOs by design.
-    - path: "tools/codegen/templates"
-      linters:
-        - gocritic
+  settings:
+    gosec:
+      excludes:
+        # G402: TLS InsecureSkipVerify is intentional and guarded by provider logic.
+        - G402
+  exclusions:
+    rules:
+      # Test files can use broad assertions and globals.
+      - path: "_test\\.go"
+        linters:
+          - gosec
+          - unparam
+      # Generated scaffold files have TODOs by design.
+      - path: "tools/codegen/templates"
+        linters:
+          - gocritic
 
 formatters:
   enable:
     - gofmt
     - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/slop-incubator/terraform-provider-kanidm
 
 run:
   timeout: 5m
