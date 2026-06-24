@@ -1,0 +1,6 @@
+# Global owners — all PRs require at least one approval from this team.
+* @slop-incubator/terraform-provider-kanidm-maintainers
+
+# Security-sensitive files require an extra review.
+.github/workflows/          @slop-incubator/terraform-provider-kanidm-maintainers
+internal/provider/provider.go @slop-incubator/terraform-provider-kanidm-maintainers

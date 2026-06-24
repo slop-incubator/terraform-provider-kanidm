@@ -1,0 +1,32 @@
+resource: oauth2_client
+go_client_field: OAuth2
+crud:
+  create: CreateClient
+  read:   GetClient
+  update: UpdateClient
+  delete: DeleteClient
+attributes:
+  - name: name
+    type: string
+    required: true
+    requires_replace: true
+  - name: display_name
+    type: string
+    required: true
+  - name: origin
+    type: string
+    required: true
+  - name: redirect_uris
+    type: set_string
+    required: true
+  - name: type
+    type: string
+    required: true
+    requires_replace: true
+  - name: client_secret
+    type: string
+    computed: true
+    sensitive: true
+  - name: pkce_method
+    type: string
+    optional: true

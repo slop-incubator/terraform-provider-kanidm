@@ -1,0 +1,50 @@
+name: Acceptance Tests
+
+on:
+  # Run on pushes to main and on manually triggered runs.
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance:
+    name: Acceptance (${{ matrix.kanidm-version }} / Go ${{ matrix.go-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        kanidm-version: ["latest", "v1.8.3"]
+        go-version: ["1.22", "1.23"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+          cache: true
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Start Kanidm ${{ matrix.kanidm-version }}
+        run: bash scripts/bootstrap-kanidm.sh ${{ matrix.kanidm-version }}
+
+      - name: Run acceptance tests
+        run: make test-acceptance
+        env:
+          TF_ACC: "1"
+          KANIDM_URL: https://localhost:8443
+          KANIDM_TOKEN: ${{ secrets.KANIDM_TEST_TOKEN }}
+          KANIDM_TLS_STRICT: "0"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.kanidm-version }}-go${{ matrix.go-version }}
+          path: test-results.xml

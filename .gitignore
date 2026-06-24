@@ -1,0 +1,37 @@
+# Build artifacts
+terraform-provider-kanidm
+dist/
+
+# Local GOPATH (Nix shell installs go tools here)
+.gopath/
+
+# Terraform / OpenTofu working directories
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!examples/**/*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# Test output
+test-results.xml
+coverage.out
+coverage.html
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Sensitive
+*.pem
+*.key
+/tmp/kanidm-test-token

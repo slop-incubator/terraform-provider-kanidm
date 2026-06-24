@@ -1,0 +1,22 @@
+{
+  "person": {
+    "read_fields": ["uuid", "displayname", "mail", "spn", "name"],
+    "write_fields": ["displayname", "mail"]
+  },
+  "service_account": {
+    "read_fields": ["uuid", "displayname", "spn", "name", "entry_managed_by"],
+    "write_fields": ["displayname", "entry_managed_by"]
+  },
+  "group": {
+    "read_fields": ["uuid", "name", "spn", "member", "entry_managed_by"],
+    "write_fields": ["name", "member", "entry_managed_by"]
+  },
+  "oauth2_rs": {
+    "read_fields": ["uuid", "name", "displayname", "origin", "scope_maps", "sup_scope_maps", "claim_maps"],
+    "write_fields": ["name", "displayname", "origin", "scope_maps", "sup_scope_maps", "claim_maps"]
+  },
+  "oauth2_client": {
+    "read_fields": ["uuid", "name", "displayname", "origin", "redirect_uris", "type", "pkce_method"],
+    "write_fields": ["name", "displayname", "origin", "redirect_uris", "pkce_method"]
+  }
+}

@@ -1,0 +1,22 @@
+resource: group
+go_client_field: Groups
+crud:
+  create: CreateGroup
+  read:   GetGroup
+  update: UpdateGroup
+  delete: DeleteGroup
+attributes:
+  - name: name
+    type: string
+    required: true
+    requires_replace: true
+  - name: spn
+    type: string
+    computed: true
+  - name: entry_managed_by
+    type: string
+    optional: true
+  - name: members
+    type: set_string
+    optional: true
+    computed: true
