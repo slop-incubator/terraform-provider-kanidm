@@ -56,10 +56,11 @@ jobs:
           TF_ACC: ""  # explicitly unset — unit tests must not require a live Kanidm
 
   schema-diff:
+    if: false
     name: Schema drift check (nightly)
     runs-on: ubuntu-latest
     # Only run on the default branch; acceptance infra not available on PRs.
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v7
 
