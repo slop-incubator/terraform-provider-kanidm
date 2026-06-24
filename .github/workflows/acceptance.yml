@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         kanidm-version: ["latest", "v1.8.3"]
-        go-version: ["1.22", "1.23"]
+        go-version: ["1.23", "1.26"]
 
     steps:
       - uses: actions/checkout@v7
