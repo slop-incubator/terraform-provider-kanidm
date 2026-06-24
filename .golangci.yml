@@ -3,7 +3,6 @@ version: "2"
 linters:
   enable:
     - errcheck
-    - gosimple
     - govet
     - ineffassign
     - staticcheck
@@ -13,8 +12,6 @@ linters:
     - bodyclose
     - exhaustive
     - gocritic
-    - gofmt
-    - goimports
     - misspell
     - nilerr
     - prealloc
@@ -40,6 +37,11 @@ issues:
     - path: "tools/codegen/templates"
       linters:
         - gocritic
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
 
 run:
   timeout: 5m
