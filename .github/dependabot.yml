@@ -38,3 +38,7 @@ updates:
       - github-actions
     commit-message:
       prefix: "deps(actions)"
+    groups:
+      github-actions-all:
+        patterns:
+          - "*"
