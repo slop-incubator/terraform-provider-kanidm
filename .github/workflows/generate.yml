@@ -1,0 +1,72 @@
+name: Regenerate client
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Every Monday at 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      kanidm_version:
+        description: 'Kanidm Docker image tag (e.g. "latest", "1.2.3")'
+        required: false
+        default: 'latest'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
+      - name: Start Kanidm (ephemeral)
+        run: |
+          KANIDM_TAG="${{ github.event.inputs.kanidm_version || 'latest' }}"
+          bash scripts/run_insecure_dev_server.sh
+          # Wait up to 60 seconds for the server to be ready.
+          timeout 60 bash -c \
+            'until curl -sk https://localhost:8443/status > /dev/null 2>&1; do sleep 2; done'
+
+      - name: Install openapi-generator-cli
+        run: npm install -g @openapitools/openapi-generator-cli
+
+      - name: Download schema
+        run: |
+          mkdir -p internal/spec/
+          curl -fsSk https://localhost:8443/docs/v1/openapi.json \
+            | jq '.' > internal/spec/kanidm-openapi.json
+          VERSION=$(jq -r '.info.version' internal/spec/kanidm-openapi.json)
+          echo "SCHEMA_VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "Schema version: ${VERSION}"
+
+      - name: Stop Kanidm container
+        if: always()
+        run: docker rm -f kanidev || true
+
+      - name: Validate schema
+        run: openapi-generator-cli validate -i internal/spec/kanidm-openapi.json
+
+      - name: Generate client
+        run: bash scripts/generate.sh
+
+      - name: Open PR if schema changed
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: chore/regenerate-client
+          commit-message: "chore: regenerate client from Kanidm schema ${{ env.SCHEMA_VERSION }}"
+          title: "chore: regenerate client from Kanidm schema ${{ env.SCHEMA_VERSION }}"
+          body: |
+            Auto-generated from OpenAPI schema version `${{ env.SCHEMA_VERSION }}`.
+
+            **Review checklist:**
+            - [ ] Breaking changes in generated models (`internal/client/`)?
+            # - [ ] New endpoints need wrapper methods in `kanidm/`?
+            - [ ] Unit tests pass?
+          labels: "auto-generated,dependencies"
+          delete-branch: true
