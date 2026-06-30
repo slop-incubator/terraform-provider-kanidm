@@ -22,7 +22,7 @@ set -euo pipefail
 
 OPENAPI_SPEC="internal/spec/kanidm-openapi.json"
 GENERATOR_CONFIG="internal/spec/generator_config.yml"
-OUTPUT_DIR="internal/client/"
+OUTPUT_DIR="internal/"
 
 CODE_SPEC_FILE="internal/spec/provider-code-spec.json"
 PACKAGE_NAME="kanidm"
@@ -45,7 +45,7 @@ if [[ ! -f "$GENERATOR_CONFIG" ]]; then
   exit 1
 fi
 
-mkdir -p "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR" "$OUTPUT_DIR/resources" "$OUTPUT_DIR/data_sources" "$OUTPUT_DIR/provider"
 
 # ---- Step 0: ensure the generator binaries are installed ----------------
 
@@ -68,10 +68,23 @@ echo "    Wrote $CODE_SPEC_FILE"
 # ---- Step 2: provider-code-spec.json -> Go provider code ----------------
 
 echo "==> Generating Terraform provider Go code..."
-tfplugingen-framework generate all \
+tfplugingen-framework generate provider \
   --input "$CODE_SPEC_FILE" \
-  --output "$OUTPUT_DIR" \
+  --output "$OUTPUT_DIR/provider" \
   --package "$PACKAGE_NAME"
+
+echo "==> Generating Terraform data_sources Go code..."
+tfplugingen-framework generate data-sources \
+  --input "$CODE_SPEC_FILE" \
+  --output "$OUTPUT_DIR/data_sources" \
+  --package "$PACKAGE_NAME"
+
+echo "==> Generating Terraform resource Go code..."
+tfplugingen-framework generate resources \
+  --input "$CODE_SPEC_FILE" \
+  --output "$OUTPUT_DIR/resources" \
+  --package "$PACKAGE_NAME"
+
 
 echo "==> Done. Generated provider code is in: $OUTPUT_DIR"
 echo "    Next steps:"
