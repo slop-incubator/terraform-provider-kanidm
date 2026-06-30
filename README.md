@@ -1,8 +1,6 @@
 # terraform-provider-kanidm
 
-An [OpenTofu](https://opentofu.org) / [Terraform](https://terraform.io) provider for
-[Kanidm](https://kanidm.github.io/kanidm/), backed by
-[`go-kanidm`](https://github.com/slop-incubator/go-kanidm).
+An [OpenTofu](https://opentofu.org) / [Terraform](https://terraform.io) provider for [Kanidm](https://kanidm.github.io/kanidm/).
 
 [![CI](https://github.com/slop-incubator/terraform-provider-kanidm/actions/workflows/ci.yml/badge.svg)](https://github.com/slop-incubator/terraform-provider-kanidm/actions/workflows/ci.yml)
 
