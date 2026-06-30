@@ -20,19 +20,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	kanidm "github.com/slop-incubator/go-kanidm/kanidm"
-
-	ds_group "github.com/slop-incubator/terraform-provider-kanidm/internal/resources/data_sources/group"
-	ds_oauth2client "github.com/slop-incubator/terraform-provider-kanidm/internal/resources/data_sources/oauth2_client"
-	ds_person "github.com/slop-incubator/terraform-provider-kanidm/internal/resources/data_sources/person"
-	ds_serviceaccount "github.com/slop-incubator/terraform-provider-kanidm/internal/resources/data_sources/service_account"
-	ds_systemconfig "github.com/slop-incubator/terraform-provider-kanidm/internal/resources/data_sources/system_config"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/group"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/group_posix"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/oauth2_client"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/oauth2_rs"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/person"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/person_posix"
-	"github.com/slop-incubator/terraform-provider-kanidm/internal/resources/service_account"
 )
 
 // Ensure KanidmProvider satisfies the provider.Provider interface.
@@ -219,25 +206,11 @@ func (p *KanidmProvider) Configure(ctx context.Context, req provider.ConfigureRe
 }
 
 func (p *KanidmProvider) Resources(_ context.Context) []func() resource.Resource {
-	return []func() resource.Resource{
-		group.NewResource,
-		person.NewResource,
-		service_account.NewResource,
-		oauth2_rs.NewResource,
-		oauth2_client.NewResource,
-		person_posix.NewResource,
-		group_posix.NewResource,
-	}
+	return []func() resource.Resource{}
 }
 
 func (p *KanidmProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{
-		ds_person.NewDataSource,
-		ds_group.NewDataSource,
-		ds_serviceaccount.NewDataSource,
-		ds_oauth2client.NewDataSource,
-		ds_systemconfig.NewDataSource,
-	}
+	return []func() datasource.DataSource{}
 }
 
 func (p *KanidmProvider) Functions(_ context.Context) []func() function.Function {
