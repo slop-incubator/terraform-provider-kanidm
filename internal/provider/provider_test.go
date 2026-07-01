@@ -4,7 +4,6 @@
 package provider_test
 
 import (
-	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
@@ -18,18 +17,6 @@ import (
 // provider under test via the plugin framework's in-process server.
 var testAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
 	"kanidm": providerserver.NewProtocol6WithError(provider.New("test")()),
-}
-
-// testAccPreCheck validates that the required environment variables are set before
-// running acceptance tests.
-func testAccPreCheck(t *testing.T) {
-	t.Helper()
-	if v := os.Getenv("KANIDM_URL"); v == "" {
-		t.Fatal("KANIDM_URL must be set for acceptance tests")
-	}
-	if v := os.Getenv("KANIDM_TOKEN"); v == "" {
-		t.Fatal("KANIDM_TOKEN must be set for acceptance tests")
-	}
 }
 
 func TestProvider_MissingURL(t *testing.T) {
