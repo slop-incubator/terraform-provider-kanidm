@@ -29,6 +29,7 @@ jobs:
 
   build:
     name: Build (${{ matrix.go-version }})
+    needs: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,25 +55,3 @@ jobs:
         run: go test -v -count=1 -race ./...
         env:
           TF_ACC: ""  # explicitly unset — unit tests must not require a live Kanidm
-
-  schema-diff:
-    if: false
-    name: Schema drift check (nightly)
-    runs-on: ubuntu-latest
-    # Only run on the default branch; acceptance infra not available on PRs.
-    #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-go@v6
-        with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Start Kanidm
-        run: bash scripts/bootstrap-kanidm.sh
-
-      - name: Run schema-sync
-        run: make schema-diff KANIDM_URL=https://localhost:8443
-        env:
-          KANIDM_TLS_STRICT: "0"  # local test instance uses self-signed cert
