@@ -25,7 +25,7 @@ GENERATOR_CONFIG="internal/spec/generator_config.yml"
 OUTPUT_DIR="internal/"
 
 CODE_SPEC_FILE="internal/spec/provider-code-spec.json"
-PACKAGE_NAME="kanidm"
+PACKAGE_NAME="provider"
 
 # Pin versions if you want reproducible builds; "latest" is simplest to start.
 OPENAPI_GEN_VERSION="${OPENAPI_GEN_VERSION:-latest}"
@@ -67,11 +67,12 @@ echo "    Wrote $CODE_SPEC_FILE"
 
 # ---- Step 2: provider-code-spec.json -> Go provider code ----------------
 
-echo "==> Generating Terraform provider Go code..."
-tfplugingen-framework generate provider \
-  --input "$CODE_SPEC_FILE" \
-  --output "$OUTPUT_DIR/provider" \
-  --package "$PACKAGE_NAME"
+# do not generate provider code anymore
+# echo "==> Generating Terraform provider Go code..."
+# tfplugingen-framework generate provider \
+#   --input "$CODE_SPEC_FILE" \
+#   --output "$OUTPUT_DIR/provider" \
+#   --package "$PACKAGE_NAME"
 
 echo "==> Generating Terraform data_sources Go code..."
 tfplugingen-framework generate data-sources \

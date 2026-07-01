@@ -180,18 +180,12 @@ func (p *KanidmProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		// token deliberately omitted
 	})
 
-	// Build HTTP transport.
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: skipVerify, //nolint:gosec // intentional, guarded above
-		},
-	}
-	httpClient := &http.Client{
-		Transport: transport,
-		Timeout:   timeout,
-	}
-
-	client, err := kanidm.NewClient(rawURL, token, kanidm.WithHTTPClient(httpClient))
+	client, err := kanidm.New(kanidm.Options{
+		BaseURL:       rawURL,
+		Token:         token,
+		TLSSkipVerify: skipVerify,
+		Timeout:       timeout,
+	})
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Failed to create Kanidm client",
