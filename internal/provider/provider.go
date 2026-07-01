@@ -5,8 +5,6 @@ package provider
 
 import (
 	"context"
-	"crypto/tls"
-	"net/http"
 	"net/url"
 	"os"
 	"strings"
@@ -19,7 +17,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	kanidm "github.com/slop-incubator/go-kanidm/kanidm"
+	"github.com/slop-incubator/go-kanidm/kanidm"
 )
 
 // Ensure KanidmProvider satisfies the provider.Provider interface.
