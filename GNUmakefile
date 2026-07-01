@@ -41,8 +41,8 @@ test: ## Run unit tests (no live Kanidm required)
 
 .PHONY: test-acceptance
 test-acceptance: ## Run acceptance tests against a live Kanidm instance
-	@bash scripts/bootstrap-kanidm.sh
 	TF_ACC=1 \
+	CGO_ENABLED=1 \
 	KANIDM_URL=$${KANIDM_URL:-https://localhost:8443} \
 	KANIDM_TOKEN=$${KANIDM_TOKEN} \
 	go test -v -count=1 -race -timeout 600s ./...

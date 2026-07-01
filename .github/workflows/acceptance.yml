@@ -32,7 +32,12 @@ jobs:
         run: go mod download
 
       - name: Start Kanidm ${{ matrix.kanidm-version }}
-        run: bash scripts/bootstrap-kanidm.sh ${{ matrix.kanidm-version }}
+        run: |
+          KANIDM_TAG="${{ matrix.kanidm-version }}"
+          bash scripts/run_insecure_dev_server.sh
+          # Wait up to 60 seconds for the server to be ready.
+          timeout 60 bash -c \
+            'until curl -sk https://localhost:8443/status > /dev/null 2>&1; do sleep 2; done'
 
       - name: Run acceptance tests
         run: make test-acceptance
@@ -41,6 +46,10 @@ jobs:
           KANIDM_URL: https://localhost:8443
           KANIDM_TOKEN: ${{ secrets.KANIDM_TEST_TOKEN }}
           KANIDM_TLS_STRICT: "0"
+
+      - name: Stop Kanidm container
+        if: always()
+        run: docker rm -f kanidev || true
 
       - name: Upload test results
         if: always()
