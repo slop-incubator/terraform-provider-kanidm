@@ -55,32 +55,12 @@ lint: ## Run golangci-lint
 
 .PHONY: fmt
 fmt: ## Format Go source files
-	gofmt -s -w .
-	goimports -w .
+	gofmt -s -w main.go internal/
+	goimports -w main.go internal/
 
 .PHONY: vet
 vet: ## Run go vet
 	go vet ./...
-
-##@ Tooling
-
-.PHONY: scaffold
-scaffold: ## Scaffold a new resource: make scaffold RESOURCE=my_resource
-ifndef RESOURCE
-	$(error RESOURCE is required: make scaffold RESOURCE=my_resource)
-endif
-	go run ./tools/codegen \
-		--spec tools/codegen/specs/$(RESOURCE).yaml \
-		--out  internal/resources/$(RESOURCE)/
-
-.PHONY: schema-diff
-schema-diff: ## Check for OpenAPI schema drift: make schema-diff KANIDM_URL=https://idm.example.com
-ifndef KANIDM_URL
-	$(error KANIDM_URL is required: make schema-diff KANIDM_URL=https://idm.example.com)
-endif
-	go run ./tools/schema-sync \
-		--url $(KANIDM_URL) \
-		--baseline tools/schema-sync/baseline.json
 
 ##@ Release
 
