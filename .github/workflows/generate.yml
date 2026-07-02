@@ -1,4 +1,4 @@
-name: Regenerate client
+name: Regenerate provider
 
 on:
   schedule:
@@ -33,9 +33,6 @@ jobs:
           timeout 60 bash -c \
             'until curl -sk https://localhost:8443/status > /dev/null 2>&1; do sleep 2; done'
 
-      - name: Install openapi-generator-cli
-        run: npm install -g @openapitools/openapi-generator-cli
-
       - name: Download schema
         run: |
           mkdir -p internal/spec/
@@ -49,24 +46,20 @@ jobs:
         if: always()
         run: docker rm -f kanidev || true
 
-      - name: Validate schema
-        run: openapi-generator-cli validate -i internal/spec/kanidm-openapi.json
-
-      - name: Generate client
+      - name: Generate provider
         run: bash scripts/generate.sh
 
       - name: Open PR if schema changed
         uses: peter-evans/create-pull-request@v8
         with:
-          branch: chore/regenerate-client
-          commit-message: "chore: regenerate client from Kanidm schema ${{ env.SCHEMA_VERSION }}"
-          title: "chore: regenerate client from Kanidm schema ${{ env.SCHEMA_VERSION }}"
+          branch: chore/regenerate-provider
+          commit-message: "chore: regenerate provider code from Kanidm schema ${{ env.SCHEMA_VERSION }}"
+          title: "chore: regenerate provider from Kanidm schema ${{ env.SCHEMA_VERSION }}"
           body: |
             Auto-generated from OpenAPI schema version `${{ env.SCHEMA_VERSION }}`.
 
             **Review checklist:**
-            - [ ] Breaking changes in generated models (`internal/client/`)?
-            # - [ ] New endpoints need wrapper methods in `kanidm/`?
+            - [ ] Breaking changes in generated models (`internal/provider/`)?
             - [ ] Unit tests pass?
           labels: "auto-generated,dependencies"
           delete-branch: true
