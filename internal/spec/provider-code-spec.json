@@ -1,0 +1,112 @@
+{
+	"provider": {
+		"name": "kanidm"
+	},
+	"resources": [
+		{
+			"name": "group",
+			"schema": {
+				"attributes": [
+					{
+						"name": "attrs",
+						"map": {
+							"computed_optional_required": "required",
+							"element_type": {
+								"list": {
+									"element_type": {
+										"string": {}
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "oauth2_basic",
+			"schema": {
+				"attributes": [
+					{
+						"name": "attrs",
+						"map": {
+							"computed_optional_required": "required",
+							"element_type": {
+								"list": {
+									"element_type": {
+										"string": {}
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "rs_name",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "person",
+			"schema": {
+				"attributes": [
+					{
+						"name": "attrs",
+						"map": {
+							"computed_optional_required": "required",
+							"element_type": {
+								"list": {
+									"element_type": {
+										"string": {}
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "service_account",
+			"schema": {
+				"attributes": [
+					{
+						"name": "attrs",
+						"map": {
+							"computed_optional_required": "required",
+							"element_type": {
+								"list": {
+									"element_type": {
+										"string": {}
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "id",
+						"string": {
+							"computed_optional_required": "computed_optional"
+						}
+					}
+				]
+			}
+		}
+	],
+	"version": "0.1"
+}
