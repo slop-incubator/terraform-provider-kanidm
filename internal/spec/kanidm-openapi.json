@@ -11,7 +11,7 @@
       "name": "MPL-2.0",
       "identifier": "MPL-2.0"
     },
-    "version": "1.10.5"
+    "version": "1.11.2"
   },
   "servers": [
     {
@@ -7958,6 +7958,12 @@
           {
             "type": "string",
             "enum": [
+              "oauth2tokenintrospectendpoint"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
               "oauth2accountcredentialuuid"
             ]
           },
@@ -7971,6 +7977,12 @@
             "type": "string",
             "enum": [
               "oauth2accountuniqueuserid"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "oauth2accountuniqueusersub"
             ]
           },
           {
@@ -8878,6 +8890,7 @@
           "mfaregstate",
           "can_commit",
           "warnings",
+          "dirty",
           "primary_state",
           "passkeys",
           "passkeys_state",
@@ -8909,6 +8922,9 @@
             "items": {
               "$ref": "#/components/schemas/CURegWarning"
             }
+          },
+          "dirty": {
+            "type": "boolean"
           },
           "primary": {
             "oneOf": [
@@ -11431,6 +11447,19 @@
             ],
             "properties": {
               "tooshort": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "toolong"
+            ],
+            "properties": {
+              "toolong": {
                 "type": "integer",
                 "format": "int32",
                 "minimum": 0
