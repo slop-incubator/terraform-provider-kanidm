@@ -11,7 +11,7 @@
       "name": "MPL-2.0",
       "identifier": "MPL-2.0"
     },
-    "version": "1.10.5"
+    "version": "1.12.1"
   },
   "servers": [
     {
@@ -472,6 +472,40 @@
         ]
       }
     },
+    "/scim/v1/Feature": {
+      "get": {
+        "tags": [
+          "scim"
+        ],
+        "operationId": "scim_feature_get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScimListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request"
+          },
+          "401": {
+            "description": "Authorization required"
+          },
+          "403": {
+            "description": "Not Authorized"
+          }
+        },
+        "security": [
+          {
+            "token_jwt": []
+          }
+        ]
+      }
+    },
     "/scim/v1/Message": {
       "get": {
         "tags": [
@@ -565,6 +599,47 @@
                   "$ref": "#/components/schemas/ScimEntry"
                 }
               }
+            }
+          },
+          "400": {
+            "description": "Invalid Request"
+          },
+          "401": {
+            "description": "Authorization required"
+          },
+          "403": {
+            "description": "Not Authorized"
+          }
+        },
+        "security": [
+          {
+            "token_jwt": []
+          }
+        ]
+      }
+    },
+    "/scim/v1/Message/{id}/_resend": {
+      "delete": {
+        "tags": [
+          "scim"
+        ],
+        "operationId": "scim_message_id_resend_post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {}
             }
           },
           "400": {
@@ -7958,6 +8033,12 @@
           {
             "type": "string",
             "enum": [
+              "oauth2tokenintrospectendpoint"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
               "oauth2accountcredentialuuid"
             ]
           },
@@ -7971,6 +8052,12 @@
             "type": "string",
             "enum": [
               "oauth2accountuniqueuserid"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "oauth2accountuniqueusersub"
             ]
           },
           {
@@ -8878,6 +8965,7 @@
           "mfaregstate",
           "can_commit",
           "warnings",
+          "dirty",
           "primary_state",
           "passkeys",
           "passkeys_state",
@@ -8909,6 +8997,9 @@
             "items": {
               "$ref": "#/components/schemas/CURegWarning"
             }
+          },
+          "dirty": {
+            "type": "boolean"
           },
           "primary": {
             "oneOf": [
@@ -10309,6 +10400,42 @@
           {
             "type": "string",
             "enum": [
+              "as0001featuredisabled"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "as0002featuredisabled"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "as0003featuredisabled"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "as0004invalidstate"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "as0005invalidstate"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "as0006invalidstate"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
               "cu0001webauthnattestationnottrusted"
             ]
           },
@@ -10628,6 +10755,12 @@
             "type": "string",
             "enum": [
               "sc0033assertioncontainsduplicateuuids"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "sc0034uuidsyntaxinvalid"
             ]
           },
           {
@@ -11179,6 +11312,54 @@
           {
             "type": "string",
             "enum": [
+              "kp0081keyobjectimportjwea256gcminvalid"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0082keyobjectimportjwea256gcminvalid"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0083keyobjectjwenotassociated"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0084keyobjectjweinvalid"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0085keyobjectjwerevoked"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0086keyobjectnoactiveencryptionkeys"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0087keyobjectjwea256gcmencryption"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "kp0088keyprovidernosuchkey"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
               "pl0001gidoverlapssystemrange"
             ]
           },
@@ -11204,6 +11385,48 @@
             "type": "string",
             "enum": [
               "ui0004memberalreadyexists"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0005personalreadyexists"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0006missingdisplayname"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0007duplicateemail"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0008invalidusername"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0009groupalreadyexists"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0010missinggroupname"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "ui0011invalidgroupname"
             ]
           },
           {
@@ -11431,6 +11654,19 @@
             ],
             "properties": {
               "tooshort": {
+                "type": "integer",
+                "format": "int32",
+                "minimum": 0
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "toolong"
+            ],
+            "properties": {
+              "toolong": {
                 "type": "integer",
                 "format": "int32",
                 "minimum": 0
